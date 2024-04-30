@@ -1,13 +1,13 @@
 import promisePool from "../../utils/database.js";
 
 const listAllUsers = async () => {
-    const [rows] = await promisePool.query('SELECT * FROM users');
+    const [rows] = await promisePool.query('SELECT * FROM user');
     console.log('rows', rows);
     return rows;
 };
 
 const findUserById = async (id) => {
-    const [rows] = await promisePool.execute('SELECT * FROM users WHERE user_id = ?', [id]);
+    const [rows] = await promisePool.execute('SELECT * FROM user WHERE user_id = ?', [id]);
     console.log('rows', rows);
     if (rows.length === 0) {
         return false;
@@ -17,7 +17,7 @@ const findUserById = async (id) => {
 
 const addUser = async (user) => {
     const {name, username, email, role, password} = user;
-    const sql = `INSERT INTO users (name, username, email, role, password)
+    const sql = `INSERT INTO user (name, username, email, role, password)
                  VALUES (?, ?, ?, ?, ?)`;
     const params = [name, username, email, role, password];
     const rows = await promisePool.execute(sql, params);
@@ -29,7 +29,7 @@ const addUser = async (user) => {
 };
 
 const modifyUser = async (user, id) => {
-    const sql = promisePool.format(`UPDATE users SET ? WHERE user_id = ?`, [user, id]);
+    const sql = promisePool.format(`UPDATE user SET ? WHERE user_id = ?`, [user, id]);
     const rows = await promisePool.execute(sql);
     console.log('rows', rows);
     if (rows[0].affectedRows === 0) {

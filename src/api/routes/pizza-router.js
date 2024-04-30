@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getPizzas,
+  getAllPizzas,
   getPizzaById,
   postPizza,  
   putPizza,
@@ -30,12 +30,12 @@ const myStorage = multer.diskStorage({
 const upload = multer({dest: 'uploads/', myStorage});
 
 pizzaRouter.route('/')
-  .get(getCat)
-  .post(upload.single("filename"), postCat);
+  .get(getAllPizzas)
+  .post(upload.single("filename"), postPizza);
 
 pizzaRouter.route('/:id')
-  .get(getCatById)
-  .put(putCat)
-  .delete(deleteCat);
+  .get(getPizzaById)
+  .put(putPizza)
+  .delete(deletePizza);
 
-export default catRouter;
+export default pizzaRouter;

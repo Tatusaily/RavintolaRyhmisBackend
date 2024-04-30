@@ -1,7 +1,11 @@
-import {listAllDefaultPizzas, findPizzaById, addPizza, modifyPizza, removePizza} from "../models/pizza-model.js";
+import {listAllDefaultPizzas, listAllPizzas, findPizzaById, addPizza, modifyPizza, removePizza} from "../models/pizza-model.js";
 
 const getPizzas = async (req, res) => {
   res.json(await listAllDefaultPizzas());
+};
+
+const getAllPizzas = async (req, res) => {
+  res.json(await listAllPizzas());
 };
 
 const getPizzaById = async (req, res) => {
@@ -36,4 +40,4 @@ const deletePizza = async (req, res) => {
   res.json({message: 'Cat item deleted.', result});
 };
 
-export {getPizzas, getPizzaById, postPizza, putPizza, deletePizza};
+export {getAllPizzas, getPizzas, getPizzaById, postPizza, putPizza, deletePizza};

@@ -13,6 +13,11 @@ const listAllDefaultPizzas = async () => {
    return rows;
 };
 
+const listAllPizzas = async () => {
+   const [rows] = await promisePool.query('SELECT * FROM pizza');
+   return rows;
+};
+
 const findPizzaById = async (id) => {
     const [rows] = await promisePool.execute('SELECT * FROM pizza WHERE id = ?', [id]);
     console.log('rows', rows);
@@ -64,4 +69,4 @@ const removePizza = async (id) => {
    return {message: 'success'};
 };
 
-export {listAllDefaultPizzas, findPizzaById, addPizza, modifyPizza, removePizza};
+export {listAllDefaultPizzas, findPizzaById, addPizza, modifyPizza, removePizza, listAllPizzas};
