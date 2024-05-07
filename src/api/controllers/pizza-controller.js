@@ -9,9 +9,9 @@ const getAllPizzas = async (req, res) => {
 };
 
 const getPizzaById = async (req, res) => {
-  const cat = await findPizzaById(req.params.id);
-  if (cat) {
-    res.json(cat);
+  const pizza = await findPizzaById(req.params.id);
+  if (pizza) {
+    res.json(pizza);
   } else {
     res.sendStatus(404);
   }
@@ -30,14 +30,14 @@ const postPizza = async (req, res) => {
 const putPizza = async (req, res) => {
   const result = await modifyPizza(req.body, req.params.id);
   res.sendStatus(200);
-  res.json({message: 'Cat item updated.', result});
+  res.json({message: 'Pizza item updated.', result});
 };
 
 const deletePizza = async (req, res) => {
   // nää oli jossain tehtävässä hyvin
   const result = await removePizza(req.params.id);
   res.sendStatus(200);
-  res.json({message: 'Cat item deleted.', result});
+  res.json({message: 'Pizza item deleted.', result});
 };
 
 export {getAllPizzas, getPizzas, getPizzaById, postPizza, putPizza, deletePizza};

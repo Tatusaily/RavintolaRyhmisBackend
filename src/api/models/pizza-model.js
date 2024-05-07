@@ -71,6 +71,8 @@ const {/*PIZZA ATTRIBUTES HERE*/} = pizza;
  * @returns FALSE or "success"
 */
 const modifyPizza = async (pizza, id) => {
+   // Mitä tehdään kun muokataan pizzaa?
+   // Mitä tapahtuu tilaushistorialle?
    const sql = promisePool.format(`UPDATE pizza SET ? WHERE pizza_id = ?`, [pizza, id]);
    const rows = await promisePool.execute(sql);
    console.log('rows', rows);
@@ -86,6 +88,9 @@ const modifyPizza = async (pizza, id) => {
  * @returns FALSE or "success"
 */
 const removePizza = async (id) => {
+   // Miten toimii poistaminen? Sen pitää poistaa sit myös user-pizza linkki.
+   // Oisko parempi olla käyttämättä?
+   // Ettei tuu mitään ongelmia sit et poistaa vahingossa jotain tilaushistoriasta.
    const [rows] = await promisePool.execute('DELETE FROM cats WHERE cat_id = ?', [id]);
    console.log('rows', rows);
    if (rows.affectedRows === 0) {
