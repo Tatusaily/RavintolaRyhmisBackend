@@ -16,7 +16,4 @@ pizzaRouter.route('/:id')
   .put(putPizza)
   .delete(deletePizza);
 
-pizzaRouter.route('/user/:id')
-  .get(getUserPizzas);
-
 export default pizzaRouter;

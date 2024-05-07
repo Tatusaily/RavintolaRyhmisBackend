@@ -18,6 +18,7 @@ const getPizzaById = async (req, res) => {
 };
 
 const postPizza = async (req, res) => {
+  // AUTH?
   const result = await addPizza(req.body, req.file);
   if (result.id) {
     res.status(201);
