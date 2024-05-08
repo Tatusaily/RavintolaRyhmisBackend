@@ -4,6 +4,7 @@ const listAllToppings = async () => {
   const [rows] = await promisePool.query('SELECT id, name FROM topping');
   return rows;
 };
+
 const listToppingsWithAllergens = async () => {
   const [rows] = await promisePool.query('SELECT id, name FROM topping');
   const promiseArray = rows.map((row) => {
@@ -26,4 +27,9 @@ const listToppingsWithAllergens = async () => {
   return rows;
 };
 
-export { listToppingsWithAllergens };
+const listAllSizes = async () => {
+  const [rows] = await promisePool.query('SELECT id, size FROM size');
+  return rows;
+};
+
+export { listToppingsWithAllergens, listAllSizes };

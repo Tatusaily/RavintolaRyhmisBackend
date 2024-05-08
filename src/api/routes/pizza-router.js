@@ -3,13 +3,15 @@ import {
   getAllPizzas,
   getPizzaById,
   putPizza,
-  deletePizza
+  deletePizza,
+  postPizza
 } from '../controllers/pizza-controller.js';
 
 const pizzaRouter = express.Router();
 
 pizzaRouter.route('/')
   .get(getAllPizzas)
+  .post(postPizza);
 
 pizzaRouter.route('/:id')
   .get(getPizzaById)
