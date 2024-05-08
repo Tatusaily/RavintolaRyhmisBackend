@@ -23,9 +23,25 @@ const listAllDefaultPizzas = async () => {
  * List all pizzas from the entire DB
 */
 const listAllPizzas = async () => {
+   // Get all pizzas from the database
+   // Add ingredients to the pizzas
+   // Add allergens to the ingredients
+
+   // Get all pizzas
    const [rows] = await promisePool.query('SELECT * FROM pizza');
-   return rows;
-};
+   //console.log(rows);
+
+   // Get all ingredients
+   const [ingredients] = await promisePool.query('SELECT * FROM ingredient');
+   //console.log(ingredients);
+
+   // Get all allergens
+   const [allergens] = await promisePool.query('SELECT * FROM allergen');
+   //console.log(allergens);
+
+
+}
+
 
 /**
  * Find pizza by id
