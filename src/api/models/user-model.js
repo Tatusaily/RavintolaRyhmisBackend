@@ -58,7 +58,7 @@ const removeUser = async (id) => {
         await connection.rollback();
         console.error('ROLLBACK', e.message);
         return false;
-        
+
     } finally {
         connection.release();
     }
@@ -71,4 +71,17 @@ const findPizzasByUserID = async (id) => {
     return rows;
 };
 
-export {listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID};
+const login = async (user) => {
+  try {
+    const sql = `SELECT *
+                 FROM user
+                 WHERE username = ?`;
+    const [rows] = await promisePool.execute(sql, [user.username]);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export {login, listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID};
