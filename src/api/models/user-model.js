@@ -16,10 +16,10 @@ const findUserById = async (id) => {
 };
 
 const addUser = async (user) => {
-    const {name, username, email, role, password} = user;
-    const sql = `INSERT INTO user (name, username, email, role, password)
-                 VALUES (?, ?, ?, ?, ?)`;
-    const params = [name, username, email, role, password];
+    const {name, password} = user;
+    const sql = `INSERT INTO user (name, password, admin_privilege)
+                 VALUES (?, ?, ?)`;
+    const params = [name, password, 0];
     const rows = await promisePool.execute(sql, params);
     console.log('rows', rows);
     if (rows[0].affectedRows === 0) {
@@ -64,6 +64,15 @@ const removeUser = async (id) => {
     }
 }
 
+const getUserByUsername = async (username) => {
+    const [rows] = await promisePool.execute('SELECT * FROM user WHERE name = ?', [username]);
+    console.log('rows', rows);
+    if (rows.length === 0) {
+        return false;
+    }
+    return rows[0];
+};
+
 const findPizzasByUserID = async (id) => {
     console.log('id', id);
     const [rows] = await promisePool.execute('SELECT * FROM cats WHERE owner = ?', [id]);
@@ -75,7 +84,7 @@ const login = async (user) => {
   try {
     const sql = `SELECT *
                  FROM user
-                 WHERE username = ?`;
+                 WHERE name = ?`;
     const [rows] = await promisePool.execute(sql, [user.username]);
     return rows[0];
   } catch (err) {
@@ -84,4 +93,4 @@ const login = async (user) => {
   }
 };
 
-export {login, listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID};
+export {login, listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID, getUserByUsername};
