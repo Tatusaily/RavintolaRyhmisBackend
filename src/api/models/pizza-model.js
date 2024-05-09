@@ -23,25 +23,15 @@ const listAllDefaultPizzas = async () => {
  * List all pizzas from the entire DB
 */
 const listAllPizzas = async () => {
-  // Get all pizzas from the database
-  // Add ingredients to the pizzas
-  // Add allergens to the ingredients
-
-  // Get all pizzas
-  const [rows] = await promisePool.query('SELECT * FROM pizza');
-  //console.log(rows);
-
-  // Get all ingredients
-  const [ingredients] = await promisePool.query('SELECT * FROM ingredient');
-  //console.log(ingredients);
-
-  // Get all allergens
-  const [allergens] = await promisePool.query('SELECT * FROM allergen');
-  //console.log(allergens);
-
-
-}
-
+   const [rows] = await promisePool.query(`SELECT pizza.id, pizza.name, pizza.price FROM pizza`)
+   .then (async (rows) => {
+      rows.forEach( async (row) => {
+         const [result] = await promisePool.query(`SELECT topping.name FROM topping INNER JOIN pizza_topping ON topping.id = pizza_topping.topping_id WHERE pizza_topping.pizza_id = ?`, [row.id]);
+         row.ingredients = result;
+      });
+   });
+   return rows;
+};
 
 /**
  * Find pizza by id

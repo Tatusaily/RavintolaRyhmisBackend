@@ -6,15 +6,40 @@ const listAllUsers = async () => {
   return rows;
 };
 
+/**
+ * Fund user by User ID
+ * @param {Int} id 
+ * @returns user object with all fields
+ */
 const findUserById = async (id) => {
-  const [rows] = await promisePool.execute('SELECT * FROM user WHERE user_id = ?', [id]);
-  console.log('rows', rows);
-  if (rows.length === 0) {
-    return false;
-  }
-  return rows[0];
+    const [rows] = await promisePool.execute('SELECT * FROM user WHERE user_id = ?', [id]);
+    if (rows.length === 0) {
+        return false;
+    }
+    return rows[0];
 };
 
+
+/**
+ * Fund user by name
+ * @param {String} name 
+ * @returns user object with all fields
+ * Can be used in login
+ */
+const findUserByName = async (name) => {
+    const [rows] = await promisePool.execute('SELECT * FROM user WHERE name = ?', [name]);
+    if (rows.length === 0) {
+        return false;
+    }
+    return rows[0];
+};
+
+/**
+ * Registers a new user to the DB
+ * @param {user} user 
+ * @returns 
+ * WRONG PARAMS DOES NOT WORK
+ */
 const addUser = async (user) => {
   const { name, username, email, role, password } = user;
   const sql = `INSERT INTO user (name, username, email, role, password)
@@ -71,6 +96,4 @@ const findPizzasByUserID = async (id) => {
   return rows;
 };
 
-
-
-export { listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID };
+export {listAllUsers, findUserById, findUserByName, addUser, modifyUser, removeUser, findPizzasByUserID};
