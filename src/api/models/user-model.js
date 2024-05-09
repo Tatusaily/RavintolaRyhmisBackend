@@ -41,16 +41,16 @@ const findUserByName = async (name) => {
  * WRONG PARAMS DOES NOT WORK
  */
 const addUser = async (user) => {
-  const { name, username, email, role, password } = user;
-  const sql = `INSERT INTO user (name, username, email, role, password)
-                 VALUES (?, ?, ?, ?, ?)`;
-  const params = [name, username, email, role, password];
-  const rows = await promisePool.execute(sql, params);
-  console.log('rows', rows);
-  if (rows[0].affectedRows === 0) {
-    return false;
-  }
-  return { user_id: rows[0].insertId };
+    const {name, password} = user;
+    const sql = `INSERT INTO user (name, password, admin_privilege)
+                 VALUES (?, ?, ?)`;
+    const params = [name, password, 0];
+    const rows = await promisePool.execute(sql, params);
+    console.log('rows', rows);
+    if (rows[0].affectedRows === 0) {
+        return false;
+    }
+    return {user_id: rows[0].insertId};
 };
 
 const modifyUser = async (user, id) => {
@@ -89,6 +89,15 @@ const removeUser = async (id) => {
   }
 }
 
+const getUserByUsername = async (username) => {
+    const [rows] = await promisePool.execute('SELECT * FROM user WHERE name = ?', [username]);
+    console.log('rows', rows);
+    if (rows.length === 0) {
+        return false;
+    }
+    return rows[0];
+};
+
 const findPizzasByUserID = async (id) => {
   console.log('id', id);
   const [rows] = await promisePool.execute('SELECT * FROM cats WHERE owner = ?', [id]);
@@ -96,4 +105,17 @@ const findPizzasByUserID = async (id) => {
   return rows;
 };
 
-export {listAllUsers, findUserById, findUserByName, addUser, modifyUser, removeUser, findPizzasByUserID};
+const login = async (user) => {
+  try {
+    const sql = `SELECT *
+                 FROM user
+                 WHERE name = ?`;
+    const [rows] = await promisePool.execute(sql, [user.username]);
+    return rows[0];
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export {login, listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID, getUserByUsername};

@@ -1,4 +1,5 @@
-import { addUser, findUserById, listAllUsers, findPizzasByUserID, findUserByName} from "../models/user-model.js";
+import { addUser, findUserById, listAllUsers, findPizzasByUserID} from "../models/user-model.js";
+import bcrypt from "bcrypt";
 
 const getUser = async (req, res) => {
   res.json(await listAllUsers());
@@ -26,6 +27,8 @@ const getUserByName = async (req, res) => {
  * Registers a new user to the DB.
  */
 const postUser = async (req, res) => {
+  // modify req.body.password:
+  req.body.password = bcrypt.hashSync(req.body.password, 10);
   const result = await addUser(req.body);
   if (result.user_id) {
     res.status(201);
@@ -65,4 +68,4 @@ const getPizzasByUserID = async (req, res) => {
   }
 };
 
-export { getUser, getUserById, postUser, putUser, deleteUser, getPizzasByUserID, getUserByName};
+export { getUser, getUserById, postUser, putUser, deleteUser, getPizzasByUserID};
