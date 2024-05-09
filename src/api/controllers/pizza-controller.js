@@ -19,7 +19,7 @@ const getPizzaById = async (req, res) => {
 
 const postPizza = async (req, res) => {
   // AUTH?
-  const result = await addPizza(req.body, 1);
+  const result = await addPizza(req.body, 5);
   if (result.id) {
     res.status(201);
     res.json({ message: 'New pizza added.', result });
