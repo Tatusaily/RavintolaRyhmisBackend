@@ -1,4 +1,3 @@
-import sharp from 'sharp';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 
