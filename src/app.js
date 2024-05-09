@@ -2,8 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import api from './api/index.js';
 
-
-const express = require('express');
 const cors = require('cors');
 const app = express();
 
