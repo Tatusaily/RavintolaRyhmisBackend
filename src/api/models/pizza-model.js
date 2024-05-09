@@ -56,36 +56,45 @@ const findPizzaById = async (id) => {
  */
 
 const addPizza = async (pizza, user_id) => {
-  x
-  const { name, toppings, price } = pizza;
+  /*
+  pizza = {
+    name: "Pizza",
+    toppings: [1, 2, 3],
+    price: 10.00
+  }
+  */
+
+  // Toppings on lista?
+  console.log('PIZZA', pizza.pizza);
+  const { name, toppings, price } = pizza.pizza;
   const sql = `INSERT INTO pizza (name, price, show_on_menu)
                VALUES (?, ?, ?)`;
-
   const params = [name, price, 0];
-  console.log('sql', params);
+  console.log('PARAMS', params);
   const rows = await promisePool.execute(sql, params);
-  console.log('rows', rows);
+  console.log('ROWS', rows);
   if (rows[0].affectedRows === 0) {
     return false;
   }
+
   let sql2 = `INSERT INTO user_pizza (user_id, pizza_id)
               VALUES (?, ?)`;
   let params2 = [user_id, rows[0].insertId];
-  console.log('sql2', sql2);
+  console.log('SQL2', sql2);
   const rows2 = await promisePool.execute(sql2, params2);
-  console.log('rows2', rows2);
+  console.log('ROWS2', rows2);
   if (rows2[0].affectedRows === 0) {
     return false;
   }
 
-  console.log('toppings', toppings);
+  console.log('TOPPINGS', toppings);
   for (let topping of toppings) {
     let sql3 = `INSERT INTO pizza_topping (pizza_id, topping_id)
                 VALUES (?, ?)`;
     let params3 = [rows[0].insertId, topping];
-    console.log('sql3', sql3);
+    console.log('SQL3', sql3);
     const rows3 = await promisePool.execute(sql3, params3);
-    console.log('rows3', rows3);
+    console.log('ROWS3', rows3);
     if (rows3[0].affectedRows === 0) {
       return false;
     }
