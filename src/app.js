@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import api from './api/index.js';
 
-const cors = require('cors');
 const app = express();
 
 app.use(cors());
