@@ -5,15 +5,6 @@ const getUser = async (req, res) => {
   res.json(await listAllUsers());
 };
 
-const getUserById = async (req, res) => {
-  const user = await findUserById(req.params.id);
-  if (user) {
-    res.json(user);
-  } else {
-    res.sendStatus(404);
-  }
-};
-
 const getUserByName = async (req, res) => {
   const user = await findUserByName(req.params.name);
   if (user) {
@@ -23,9 +14,15 @@ const getUserByName = async (req, res) => {
   }
 }
 
-/**
- * Registers a new user to the DB.
- */
+const getUserById = async (req, res) => {
+  const user = await findUserById(req.params.id);
+  if (user) {
+    res.json(user);
+  } else {
+    res.sendStatus(404);
+  }
+};
+
 const postUser = async (req, res) => {
   // modify req.body.password:
   req.body.password = bcrypt.hashSync(req.body.password, 10);
@@ -38,9 +35,6 @@ const postUser = async (req, res) => {
   }
 };
 
-/**
- * Updates a user in the DB.
- */
 const putUser = async (req, res) => {
   // PLACEHOLDER
   // DOES NOT WORK
@@ -55,10 +49,6 @@ const deleteUser = async (req, res) => {
     res.json({ message: "User item deleted.", result });
 }
 
-/**
- * Gets all user's pizzas by userID.
- * @param {Request} req.params.id - The user ID.
- */
 const getPizzasByUserID = async (req, res) => {
   const cats = await findPizzasByUserID(req.params.id);
   if (cats) {
