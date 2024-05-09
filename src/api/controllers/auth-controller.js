@@ -6,7 +6,7 @@ import 'dotenv/config';
 const postLogin = async (req, res) => {
   console.log('postLogin', req.body);
   const user = await getUserByUsername(req.body.name);
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header = 'Access-Control-Allow-Origin';
   if (!user) {
     res.sendStatus(401);
     return;
