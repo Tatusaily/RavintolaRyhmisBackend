@@ -5,7 +5,7 @@ import 'dotenv/config';
 
 const postLogin = async (req, res) => {
   console.log('postLogin', req.body);
-  const user = await getUserByUsername(req.body.username);
+  const user = await getUserByUsername(req.body.name);
   if (!user) {
     res.sendStatus(401);
     return;
@@ -16,16 +16,12 @@ const postLogin = async (req, res) => {
     return;
   }
 
+  // User tulee takaisin ilman salasanakenttää
   const userWithNoPassword = {
     user_id: user.user_id,
     name: user.name,
-    username: user.username,
-    email: user.email,
-    role: user.role,
+    admin: user.admin_privilege,
   };
-
-  // toinen vaihtoehto
-  // delete user.password;
 
   const token = jwt.sign(userWithNoPassword, process.env.JWT_SECRET, {
     expiresIn: '24h',
