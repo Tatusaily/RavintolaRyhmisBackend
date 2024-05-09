@@ -13,6 +13,9 @@ const getUserById = async (req, res) => {
   }
 };
 
+/**
+ * Registers a new user to the DB.
+ */
 const postUser = async (req, res) => {
   const result = await addUser(req.body);
   if (result.user_id) {
@@ -23,6 +26,9 @@ const postUser = async (req, res) => {
   }
 };
 
+/**
+ * Updates a user in the DB.
+ */
 const putUser = async (req, res) => {
   // PLACEHOLDER
   // DOES NOT WORK
@@ -37,6 +43,10 @@ const deleteUser = async (req, res) => {
     res.json({ message: "User item deleted.", result });
 }
 
+/**
+ * Gets all user's pizzas by userID.
+ * @param {Request} req.params.id - The user ID.
+ */
 const getPizzasByUserID = async (req, res) => {
   const cats = await findPizzasByUserID(req.params.id);
   if (cats) {

@@ -6,15 +6,27 @@ const listAllUsers = async () => {
     return rows;
 };
 
+/**
+ * Fund user by User ID
+ * @param {Int} id 
+ * @returns user object without password
+ * 
+ * NOT WORKING YET
+ */
 const findUserById = async (id) => {
     const [rows] = await promisePool.execute('SELECT * FROM user WHERE user_id = ?', [id]);
-    console.log('rows', rows);
     if (rows.length === 0) {
         return false;
     }
     return rows[0];
 };
 
+/**
+ * Registers a new user to the DB
+ * @param {user} user 
+ * @returns 
+ * WRONG PARAMS DOES NOT WORK
+ */
 const addUser = async (user) => {
     const {name, username, email, role, password} = user;
     const sql = `INSERT INTO user (name, username, email, role, password)
