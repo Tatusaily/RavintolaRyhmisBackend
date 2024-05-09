@@ -1,4 +1,4 @@
-import { addUser, findUserById, listAllUsers, findPizzasByUserID} from "../models/user-model.js";
+import { addUser, findUserById, listAllUsers, findPizzasByUserID, findUserByName} from "../models/user-model.js";
 
 const getUser = async (req, res) => {
   res.json(await listAllUsers());
@@ -12,6 +12,15 @@ const getUserById = async (req, res) => {
     res.sendStatus(404);
   }
 };
+
+const getUserByName = async (req, res) => {
+  const user = await findUserByName(req.params.name);
+  if (user) {
+    res.json(user);
+  } else {
+    res.sendStatus(404);
+  }
+}
 
 /**
  * Registers a new user to the DB.
@@ -56,4 +65,4 @@ const getPizzasByUserID = async (req, res) => {
   }
 };
 
-export { getUser, getUserById, postUser, putUser, deleteUser, getPizzasByUserID};
+export { getUser, getUserById, postUser, putUser, deleteUser, getPizzasByUserID, getUserByName};

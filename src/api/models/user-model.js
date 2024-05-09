@@ -9,12 +9,25 @@ const listAllUsers = async () => {
 /**
  * Fund user by User ID
  * @param {Int} id 
- * @returns user object without password
- * 
- * NOT WORKING YET
+ * @returns user object with all fields
  */
 const findUserById = async (id) => {
     const [rows] = await promisePool.execute('SELECT * FROM user WHERE user_id = ?', [id]);
+    if (rows.length === 0) {
+        return false;
+    }
+    return rows[0];
+};
+
+
+/**
+ * Fund user by name
+ * @param {String} name 
+ * @returns user object with all fields
+ * Can be used in login
+ */
+const findUserByName = async (name) => {
+    const [rows] = await promisePool.execute('SELECT * FROM user WHERE name = ?', [name]);
     if (rows.length === 0) {
         return false;
     }
@@ -83,4 +96,4 @@ const findPizzasByUserID = async (id) => {
     return rows;
 };
 
-export {listAllUsers, findUserById, addUser, modifyUser, removeUser, findPizzasByUserID};
+export {listAllUsers, findUserById, findUserByName, addUser, modifyUser, removeUser, findPizzasByUserID};
